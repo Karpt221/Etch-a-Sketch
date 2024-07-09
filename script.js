@@ -13,3 +13,11 @@ for(let i = 0; i < numeberOfPixels; i++){
     gridPixel.style.boxSizing = "border-box";
     sketchContainer.appendChild(gridPixel);
 }
+
+const pixelsArray = document.querySelectorAll("#sketch-container > div");
+
+pixelsArray.forEach(pixel => {
+    pixel.addEventListener("mouseenter", () => {
+        pixel.style.backgroundColor = "red";
+    });
+});
