@@ -3,7 +3,7 @@ const changeResolutionBtn = document.querySelector(".change-grid-btn");
 const btnContainer = document.querySelector(".btn-container");
 const colorPicker = document.querySelector("#color-picker");
 
-const GRID_SIZE= 960;
+const GRID_SIZE = 600;
 let rainbowMode = false;
 let singleColorMode = true;
 let opacityMode = false;
@@ -30,6 +30,21 @@ function buildGrid(gridResolution){
         gridPixel.style.height = `${pixelSize}px`;
         gridPixel.style.boxSizing = "border-box";
         gridPixel.style.opacity = "0";
+        gridPixel.addEventListener("mouseenter", () => {
+            if(rainbowMode){
+                let red = Math.random() * 255;
+                let green = Math.random() * 255;
+                let blue = Math.random() * 255;
+                gridPixel.style.backgroundColor = `rgb(${red},${green},${blue})`;
+                gridPixel.style.opacity = "1";
+            }else if(singleColorMode){
+                gridPixel.style.backgroundColor = `${colorPicker.value}`;
+                gridPixel.style.opacity = "1";
+            }else if(opacityMode){
+                gridPixel.style.backgroundColor = `${colorPicker.value}`;
+                gridPixel.style.opacity = parseFloat(gridPixel.style.opacity) + 0.1;
+            }
+        });
         sketchContainer.appendChild(gridPixel);
     }
 }
@@ -42,36 +57,12 @@ function defineNewResolution(){
     }
     sketchContainer.innerHTML = "";
     buildGrid(newResolution);
-    addPixelHoverListeners();
     sessionStorage.setItem("resolution", newResolution);
 }
 
-function addPixelHoverListeners(){
-    const pixelsArray = document.querySelectorAll(".sketch-container > div");
 
-    pixelsArray.forEach(pixel => {
-        pixel.addEventListener("mouseenter", () => {
-            if(rainbowMode){
-                let red = Math.random() * 255;
-                let green = Math.random() * 255;
-                let blue = Math.random() * 255;
-                pixel.style.backgroundColor = `rgb(${red},${green},${blue})`;
-                pixel.style.opacity = "1";
-            }else if(singleColorMode){
-                pixel.style.backgroundColor = `${colorPicker.value}`;
-                pixel.style.opacity = "1";
-            }else if(opacityMode){
-                pixel.style.backgroundColor = `${colorPicker.value}`;
-                pixel.style.opacity = parseFloat(pixel.style.opacity) + 0.1;
-            }
-            
-        });
-    });
-}
 
 buildGrid(sessionStorage.getItem("resolution"));
-
-addPixelHoverListeners();
 
 btnContainer.addEventListener("click", (event) =>{
     switch(event.target.id){
