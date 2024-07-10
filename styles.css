@@ -14,9 +14,10 @@
     padding: 50px;
 }
 
-.change-grid-btn{
+.btn{
     width: 300px;
     height: 100px;
     font-size: 30px;
     font-weight: bold;
+    margin: 10px;
 }
