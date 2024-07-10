@@ -16,6 +16,7 @@ function cleanGrid(){
     const pixelsArray = document.querySelectorAll(".sketch-container div");
     pixelsArray.forEach(pixel => {
         pixel.style.backgroundColor = "transparent";
+        pixel.style.opacity = "0";
     });
 }
 
