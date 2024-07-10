@@ -1,6 +1,7 @@
 const sketchContainer = document.querySelector(".sketch-container");
 const changeResolutionBtn = document.querySelector(".change-grid-btn");
 const btnContainer = document.querySelector(".btn-container");
+const colorPicker = document.querySelector("#color-picker");
 
 const GRID_SIZE= 960;
 let rainbowMode = false;
@@ -11,10 +12,10 @@ if(!sessionStorage.getItem("resolution")){
     sessionStorage.setItem("resolution", 16);
 }
 
-function setOpacity(opacity){
+function cleanGrid(){
     const pixelsArray = document.querySelectorAll(".sketch-container div");
     pixelsArray.forEach(pixel => {
-        pixel.style.opacity = `${opacity}`;
+        pixel.style.backgroundColor = "transparent";
     });
 }
 
@@ -26,8 +27,8 @@ function buildGrid(gridResolution){
         const gridPixel = document.createElement("div");
         gridPixel.style.width = `${pixelSize}px`;
         gridPixel.style.height = `${pixelSize}px`;
-        gridPixel.style.border = "1px solid black";
         gridPixel.style.boxSizing = "border-box";
+        gridPixel.style.opacity = "0";
         sketchContainer.appendChild(gridPixel);
     }
 }
@@ -54,10 +55,12 @@ function addPixelHoverListeners(){
                 let green = Math.random() * 255;
                 let blue = Math.random() * 255;
                 pixel.style.backgroundColor = `rgb(${red},${green},${blue})`;
+                pixel.style.opacity = "1";
             }else if(singleColorMode){
-                pixel.style.backgroundColor = "grey";
+                pixel.style.backgroundColor = `${colorPicker.value}`;
+                pixel.style.opacity = "1";
             }else if(opacityMode){
-                pixel.style.backgroundColor = "grey";
+                pixel.style.backgroundColor = `${colorPicker.value}`;
                 pixel.style.opacity = parseFloat(pixel.style.opacity) + 0.1;
             }
             
@@ -75,22 +78,25 @@ btnContainer.addEventListener("click", (event) =>{
             defineNewResolution();
             break;
         case "rainbow-mode-btn":
+            if(rainbowMode) return;
             rainbowMode = true;
             singleColorMode = false;
             opacityMode = false;
-            setOpacity("1");
             break;
         case "single-color-btn":
+            if(singleColorMode) return;
             rainbowMode = false;
             singleColorMode = true;
             opacityMode = false;
-            setOpacity("1");
             break;
         case "opacity-mode-btn":
+            if(opacityMode) return;
             rainbowMode = false;
             singleColorMode = false;
             opacityMode = true;
-            setOpacity("0");
+            break;
+        case "clean-grid":
+            cleanGrid();
             break;
     }
 });

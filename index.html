@@ -8,12 +8,21 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="btn-container">
-        <button class="btn" id="change-grid-btn">Change grid resolution</button>
-        <button class="btn" id="rainbow-mode-btn">Rainbow mode</button>
-        <button class="btn" id="single-color-btn">Single color</button>
-        <button class="btn" id="opacity-mode-btn">Opacity mode</button>
+    
+    <div class="btn-wrapper">
+        <div class="btn-container">
+            <div class="color-picker-container">
+                <label for="color-picker">Select color</label>
+                <input type="color" id="color-picker" value="#ff0000">
+            </div>
+            <button class="btn" id="change-grid-btn">Change grid resolution</button>
+            <button class="btn" id="rainbow-mode-btn">Rainbow mode</button>
+            <button class="btn" id="single-color-btn">Single color</button>
+            <button class="btn" id="opacity-mode-btn">Opacity mode</button>
+            <button class="btn" id="clean-grid">Clean grid</button>
+        </div>
     </div>
+    
     <div class="sketch-container"></div>
     
     
